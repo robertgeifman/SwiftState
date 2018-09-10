@@ -16,13 +16,11 @@ import XCTest
 // https://github.com/ReactKit/SwiftState/pull/36
 //
 
-private enum _State: StateType, Hashable
-{
+private enum _State: StateType, Hashable {
     case pending
     case loading(Int)
 
-    var hashValue: Int
-    {
+    var hashValue: Int {
         switch self {
             case .pending:
                 return "Pending".hashValue
@@ -32,8 +30,7 @@ private enum _State: StateType, Hashable
     }
 }
 
-private func == (lhs: _State, rhs: _State) -> Bool
-{
+private func == (lhs: _State, rhs: _State) -> Bool {
     switch (lhs, rhs) {
         case (.pending, .pending):
             return true
@@ -44,13 +41,11 @@ private func == (lhs: _State, rhs: _State) -> Bool
     }
 }
 
-private enum _Event: SwiftState.EventType, Hashable
-{
+private enum _Event: SwiftState.EventType, Hashable {
     case cancelAction
     case loadAction(Int)
 
-    var hashValue: Int
-    {
+    var hashValue: Int {
         switch self {
             case .cancelAction:
                 return "CancelAction".hashValue
@@ -60,8 +55,7 @@ private enum _Event: SwiftState.EventType, Hashable
     }
 }
 
-private func == (lhs: _Event, rhs: _Event) -> Bool
-{
+private func == (lhs: _Event, rhs: _Event) -> Bool {
     switch (lhs, rhs) {
         case (.cancelAction, .cancelAction):
             return true
@@ -72,11 +66,9 @@ private func == (lhs: _Event, rhs: _Event) -> Bool
     }
 }
 
-class RouteMappingTests: _TestCase
-{
+class RouteMappingTests: _TestCase {
     /// Test for state & event with associated values
-    func testAddRouteMapping()
-    {
+    func testAddRouteMapping() {
         var count = 0
 
         let machine = StateMachine<_State, _Event>(state: .pending) { machine in
@@ -133,8 +125,7 @@ class RouteMappingTests: _TestCase
     }
 
     /// Test for state with associated values
-    func testAddStateRouteMapping()
-    {
+    func testAddStateRouteMapping() {
         var count = 0
 
         let machine = StateMachine<_State, _Event>(state: .pending) { machine in

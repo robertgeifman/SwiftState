@@ -9,10 +9,8 @@
 import SwiftState
 import XCTest
 
-class StateMachineTests: _TestCase
-{
-    func testInit()
-    {
+class StateMachineTests: _TestCase {
+    func testInit() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0)
 
         XCTAssertEqual(machine.state, MyState.state0)
@@ -23,8 +21,7 @@ class StateMachineTests: _TestCase
     //--------------------------------------------------
 
     // machine <- state
-    func testTryState()
-    {
+    func testTryState() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0)
 
         // tryState 0 => 1, without registering any transitions
@@ -40,8 +37,7 @@ class StateMachineTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state1)
     }
 
-    func testTryState_string()
-    {
+    func testTryState_string() {
         let machine = StateMachine<String, NoEvent>(state: "0")
 
         // tryState 0 => 1, without registering any transitions
@@ -62,8 +58,7 @@ class StateMachineTests: _TestCase
     //--------------------------------------------------
 
     // add state1 => state2
-    func testAddRoute()
-    {
+    func testAddRoute() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             machine.addRoute(.state0 => .state1)
         }
@@ -77,8 +72,7 @@ class StateMachineTests: _TestCase
     }
 
     // add .any => state
-    func testAddRoute_fromAnyState()
-    {
+    func testAddRoute_fromAnyState() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             machine.addRoute(.any => .state1) // Any => State1
         }
@@ -92,8 +86,7 @@ class StateMachineTests: _TestCase
     }
 
     // add state => .any
-    func testAddRoute_toAnyState()
-    {
+    func testAddRoute_toAnyState() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             machine.addRoute(.state1 => .any) // State1 => Any
         }
@@ -107,8 +100,7 @@ class StateMachineTests: _TestCase
     }
 
     // add .any => .any
-    func testAddRoute_bothAnyState()
-    {
+    func testAddRoute_bothAnyState() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             machine.addRoute(.any => .any) // Any => Any
         }
@@ -122,8 +114,7 @@ class StateMachineTests: _TestCase
     }
 
     // add state0 => state0
-    func testAddRoute_sameState()
-    {
+    func testAddRoute_sameState() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             machine.addRoute(.state0 => .state0)
         }
@@ -132,8 +123,7 @@ class StateMachineTests: _TestCase
     }
 
     // add route + condition
-    func testAddRoute_condition()
-    {
+    func testAddRoute_condition() {
         var flag = false
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -150,8 +140,7 @@ class StateMachineTests: _TestCase
     }
 
     // add route + condition + blacklist
-    func testAddRoute_condition_blacklist()
-    {
+    func testAddRoute_condition_blacklist() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             // add 0 => Any, except 0 => 2
             machine.addRoute(.state0 => .any, condition: { context in
@@ -166,8 +155,7 @@ class StateMachineTests: _TestCase
     }
 
     // add route + handler
-    func testAddRoute_handler()
-    {
+    func testAddRoute_handler() {
         var invokedCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -190,8 +178,7 @@ class StateMachineTests: _TestCase
     }
 
     // add route + conditional handler
-    func testAddRoute_conditionalHandler()
-    {
+    func testAddRoute_conditionalHandler() {
         var invokedCount = 0
         var flag = false
 
@@ -236,8 +223,7 @@ class StateMachineTests: _TestCase
 
     // MARK: addRoute using array
 
-    func testAddRoute_array_left()
-    {
+    func testAddRoute_array_left() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             // add 0 => 2 or 1 => 2
             machine.addRoute([.state0, .state1] => .state2)
@@ -251,8 +237,7 @@ class StateMachineTests: _TestCase
         XCTAssertTrue(machine.hasRoute(.state1 => .state2))
     }
 
-    func testAddRoute_array_right()
-    {
+    func testAddRoute_array_right() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             // add 0 => 1 or 0 => 2
             machine.addRoute(.state0 => [.state1, .state2])
@@ -266,8 +251,7 @@ class StateMachineTests: _TestCase
         XCTAssertFalse(machine.hasRoute(.state1 => .state2))
     }
 
-    func testAddRoute_array_both()
-    {
+    func testAddRoute_array_both() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
             // add 0 => 2 or 0 => 3 or 1 => 2 or 1 => 3
             machine.addRoute([MyState.state0, MyState.state1] => [MyState.state2, MyState.state3])
@@ -295,8 +279,7 @@ class StateMachineTests: _TestCase
     // MARK: - removeRoute
     //--------------------------------------------------
 
-    func testRemoveRoute()
-    {
+    func testRemoveRoute() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0)
 
         let routeDisposable = machine.addRoute(.state0 => .state1)
@@ -309,8 +292,7 @@ class StateMachineTests: _TestCase
         XCTAssertFalse(machine.hasRoute(.state0 => .state1))
     }
 
-    func testRemoveRoute_handler()
-    {
+    func testRemoveRoute_handler() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0)
 
         let routeDisposable = machine.addRoute(.state0 => .state1, handler: { _ in })
@@ -327,8 +309,7 @@ class StateMachineTests: _TestCase
     // MARK: - addHandler
     //--------------------------------------------------
 
-    func testAddHandler()
-    {
+    func testAddHandler() {
         var invokedCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -354,8 +335,7 @@ class StateMachineTests: _TestCase
         XCTAssertEqual(invokedCount, 1)
     }
 
-    func testAddHandler_order()
-    {
+    func testAddHandler_order() {
         var invokedCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -394,8 +374,7 @@ class StateMachineTests: _TestCase
     }
 
 
-    func testAddHandler_multiple()
-    {
+    func testAddHandler_multiple() {
         var passed1 = false
         var passed2 = false
 
@@ -424,8 +403,7 @@ class StateMachineTests: _TestCase
         XCTAssertTrue(passed2)
     }
 
-    func testAddHandler_overload()
-    {
+    func testAddHandler_overload() {
         var passed = false
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -453,8 +431,7 @@ class StateMachineTests: _TestCase
     // MARK: - removeHandler
     //--------------------------------------------------
 
-    func testRemoveHandler()
-    {
+    func testRemoveHandler() {
         var passed = false
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -486,8 +463,7 @@ class StateMachineTests: _TestCase
         XCTAssertTrue(passed)
     }
 
-    func testRemoveHandler_unregistered()
-    {
+    func testRemoveHandler_unregistered() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0)
 
         // add 0 => 1
@@ -506,8 +482,7 @@ class StateMachineTests: _TestCase
         XCTAssertTrue(handlerDisposable.disposed, "removeHandler should fail because handler is already removed.")
     }
 
-    func testRemoveErrorHandler()
-    {
+    func testRemoveErrorHandler() {
         var passed = false
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -537,8 +512,7 @@ class StateMachineTests: _TestCase
         XCTAssertTrue(passed)
     }
 
-    func testRemoveErrorHandler_unregistered()
-    {
+    func testRemoveErrorHandler_unregistered() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0)
 
         // add 0 => 1
@@ -561,8 +535,7 @@ class StateMachineTests: _TestCase
     // MARK: - addRouteChain
     //--------------------------------------------------
 
-    func testAddRouteChain()
-    {
+    func testAddRouteChain() {
         var success = false
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -592,8 +565,7 @@ class StateMachineTests: _TestCase
         XCTAssertTrue(success)
     }
 
-    func testAddChainHandler()
-    {
+    func testAddChainHandler() {
         var success = false
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -640,8 +612,7 @@ class StateMachineTests: _TestCase
     // MARK: - Event/StateRouteMapping
     //--------------------------------------------------
 
-    func testAddStateRouteMapping()
-    {
+    func testAddStateRouteMapping() {
         var routeMappingDisposable: Disposable?
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -682,8 +653,7 @@ class StateMachineTests: _TestCase
         XCTAssertFalse(machine.hasRoute(.state2 => .state2))
     }
 
-    func testAddStateRouteMapping_handler()
-    {
+    func testAddStateRouteMapping_handler() {
         var invokedCount = 0
         var routeMappingDisposable: Disposable?
 
@@ -725,8 +695,7 @@ class StateMachineTests: _TestCase
     }
 
     /// Test `Event/StateRouteMapping`s.
-    func testAddBothRouteMappings()
-    {
+    func testAddBothRouteMappings() {
         var routeMappingDisposable: Disposable?
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in

@@ -12,11 +12,10 @@ import Darwin
 import Glibc
 #endif
 
-internal func _random(_ upperBound: Int) -> Int
-{
-    #if os(OSX) || os(iOS) || os(watchOS) || os(tvOS)
+internal func _random(_ upperBound: Int) -> Int {
+#if os(OSX) || os(iOS) || os(watchOS) || os(tvOS)
     return Int(arc4random_uniform(UInt32(upperBound)))
-    #else
+#else
     return Int(random() % upperBound)
-    #endif
+#endif
 }

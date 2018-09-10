@@ -9,30 +9,25 @@
 import SwiftState
 import XCTest
 
-class StateTests: _TestCase
-{
-    func testInit_state()
-    {
+class StateTests: _TestCase {
+    func testInit_state() {
         let state = State<MyState>(rawValue: .state0)
         XCTAssertTrue(state == .state0)
         XCTAssertTrue(.state0 == state)
     }
 
-    func testInit_nil()
-    {
+    func testInit_nil() {
         let state = State<MyState>(rawValue: nil)
         XCTAssertTrue(state == .any)
         XCTAssertTrue(.any == state)
     }
 
-    func testRawValue_state()
-    {
+    func testRawValue_state() {
         let state = State<MyState>.some(.state0)
         XCTAssertTrue(state.rawValue == .state0)
     }
 
-    func testRawValue_any()
-    {
+    func testRawValue_any() {
         let state = State<MyState>.any
         XCTAssertTrue(state.rawValue == nil)
     }

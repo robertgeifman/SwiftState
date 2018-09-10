@@ -9,10 +9,8 @@
 import SwiftState
 import XCTest
 
-class TransitionChainTests: _TestCase
-{
-    func testInit()
-    {
+class TransitionChainTests: _TestCase {
+    func testInit() {
         // 0 => 1 => 2
         var chain = MyState.state0 => .state1 => .state2
 
@@ -38,8 +36,7 @@ class TransitionChainTests: _TestCase
         XCTAssertTrue(chain.states[2] == .state0)
     }
 
-    func testAppend()
-    {
+    func testAppend() {
         // 0 => 1
         let transition = MyState.state0 => .state1
         var chain = TransitionChain(transition: transition)
@@ -64,8 +61,7 @@ class TransitionChainTests: _TestCase
         XCTAssertTrue(chain.states[3] == .state3)
     }
 
-    func testPrepend()
-    {
+    func testPrepend() {
         // 0 => 1
         let transition = MyState.state0 => .state1
         var chain = TransitionChain(transition: transition)

@@ -9,14 +9,12 @@
 import SwiftState
 import XCTest
 
-private enum _MainState: StateType
-{
+private enum _MainState: StateType {
     case mainState0
     case subMachine1(_SubState)
     case subMachine2(_SubState)
 
-    var hashValue: Int
-    {
+    var hashValue: Int {
         switch self {
             case .mainState0:
                 return "MainState0".hashValue
@@ -28,13 +26,11 @@ private enum _MainState: StateType
     }
 }
 
-private enum _SubState: StateType
-{
+private enum _SubState: StateType {
     case subState0, subState1, subState2
 }
 
-private func == (lhs: _MainState, rhs: _MainState) -> Bool
-{
+private func == (lhs: _MainState, rhs: _MainState) -> Bool {
     switch (lhs, rhs) {
         case (.mainState0, .mainState0):
             return true
@@ -47,8 +43,7 @@ private func == (lhs: _MainState, rhs: _MainState) -> Bool
     }
 }
 
-class HierarchicalMachineTests: _TestCase
-{
+class HierarchicalMachineTests: _TestCase {
     ///
     /// Hierarchical state machine.
     ///
@@ -69,8 +64,7 @@ class HierarchicalMachineTests: _TestCase
     private var subMachine1: StateMachine<_SubState, NoEvent>?
     private var subMachine2: StateMachine<_SubState, NoEvent>?
 
-    override func setUp()
-    {
+    override func setUp() {
         super.setUp()
 
         let subMachine1 = StateMachine<_SubState, NoEvent>(state: .subState0) { subMachine1 in
@@ -147,8 +141,7 @@ class HierarchicalMachineTests: _TestCase
     }
 
     /// `mainMachine.hasRoute()` test to check submachine's internal routes
-    func testHasRoute_submachine_internal()
-    {
+    func testHasRoute_submachine_internal() {
         let mainMachine = self.mainMachine!
         let subMachine1 = self.subMachine1!
         let subMachine2 = self.subMachine2!
@@ -172,8 +165,7 @@ class HierarchicalMachineTests: _TestCase
     }
 
     /// `mainMachine.hasRoute()` test to check switchable submachines
-    func testHasRoute_submachine_switching()
-    {
+    func testHasRoute_submachine_switching() {
         let mainMachine = self.mainMachine!
         let subMachine1 = self.subMachine1!
         let subMachine2 = self.subMachine2!
@@ -214,8 +206,7 @@ class HierarchicalMachineTests: _TestCase
 
     }
 
-    func testTryState()
-    {
+    func testTryState() {
         let mainMachine = self.mainMachine!
 
         // initial
@@ -255,8 +246,7 @@ class HierarchicalMachineTests: _TestCase
 
     }
 
-    func testAddHandler()
-    {
+    func testAddHandler() {
         let mainMachine = self.mainMachine!
 
         var didPass = false

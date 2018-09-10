@@ -8,25 +8,21 @@
 
 import SwiftState
 
-enum MyEvent: EventType
-{
+enum MyEvent: EventType {
     case event0, event1
 }
 
-enum StrEvent: EventType
-{
+enum StrEvent: EventType {
     case str(String)
 
-    var hashValue: Int
-    {
+    var hashValue: Int {
         switch self {
             case .str(let str):  return str.hashValue
         }
     }
 }
 
-func == (lhs: StrEvent, rhs: StrEvent) -> Bool
-{
+func == (lhs: StrEvent, rhs: StrEvent) -> Bool {
     switch (lhs, rhs) {
         case let (.str(str1), .str(str2)):
             return str1 == str2

@@ -9,10 +9,8 @@
 import SwiftState
 import XCTest
 
-class StateMachineEventTests: _TestCase
-{
-    func testCanTryEvent()
-    {
+class StateMachineEventTests: _TestCase {
+    func testCanTryEvent() {
         let machine = StateMachine<MyState, MyEvent>(state: .state0)
 
         // add 0 => 1 & 1 => 2
@@ -29,8 +27,7 @@ class StateMachineEventTests: _TestCase
     // MARK: - tryEvent a.k.a `<-!`
     //--------------------------------------------------
 
-    func testTryEvent()
-    {
+    func testTryEvent() {
         let machine = StateMachine<MyState, MyEvent>(state: .state0)
 
         // add 0 => 1 => 2
@@ -52,8 +49,7 @@ class StateMachineEventTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state2, "Event0 doesn't have 2 => Any")
     }
 
-    func testTryEvent_string()
-    {
+    func testTryEvent_string() {
         let machine = StateMachine<MyState, String>(state: .state0)
 
         // add 0 => 1 => 2
@@ -76,8 +72,7 @@ class StateMachineEventTests: _TestCase
     }
 
     // https://github.com/ReactKit/SwiftState/issues/20
-    func testTryEvent_issue20()
-    {
+    func testTryEvent_issue20() {
         let machine = StateMachine<MyState, MyEvent>(state: MyState.state2) { machine in
             machine.addRoutes(event: .event0, transitions: [.any => .state0])
         }
@@ -88,8 +83,7 @@ class StateMachineEventTests: _TestCase
     }
 
     // https://github.com/ReactKit/SwiftState/issues/28
-    func testTryEvent_issue28()
-    {
+    func testTryEvent_issue28() {
         var eventCount = 0
 
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
@@ -118,8 +112,7 @@ class StateMachineEventTests: _TestCase
 
     // Fix for transitioning of routes w/ multiple from-states
     // https://github.com/ReactKit/SwiftState/pull/32
-    func testTryEvent_issue32()
-    {
+    func testTryEvent_issue32() {
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
             machine.addRoutes(event: .event0, transitions: [ .state0 => .state1 ])
             machine.addRoutes(event: .event1, routes: [ [ .state1, .state2 ] => .state3 ])
@@ -138,8 +131,7 @@ class StateMachineEventTests: _TestCase
 
     // MARK: hasRoute + event
 
-    func testHasRoute_anyEvent()
-    {
+    func testHasRoute_anyEvent() {
         ({
             let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
                 machine.addRoute(.state0 => .state1)
@@ -163,8 +155,7 @@ class StateMachineEventTests: _TestCase
 
     // Fix hasRoute() bug when there are routes for no-event & with-event.
     // https://github.com/ReactKit/SwiftState/pull/19
-    func testHasRoute_issue19()
-    {
+    func testHasRoute_issue19() {
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
             machine.addRoute(.state0 => .state1)    // no-event
             machine.addRoutes(event: .event0, transitions: [.state1 => .state2])   // with-event
@@ -178,8 +169,7 @@ class StateMachineEventTests: _TestCase
     // MARK: - add/removeRoute
     //--------------------------------------------------
 
-    func testAddRoute_tryState()
-    {
+    func testAddRoute_tryState() {
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
 
             // add 0 => 1 & 1 => 2
@@ -204,8 +194,7 @@ class StateMachineEventTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state2, "2 => 3 is not registered.")
     }
 
-    func testAddRoute_multiple()
-    {
+    func testAddRoute_multiple() {
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
 
             // add 0 => 1 => 2
@@ -249,8 +238,7 @@ class StateMachineEventTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state0)
     }
 
-    func testAddRoute_handler()
-    {
+    func testAddRoute_handler() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
@@ -276,8 +264,7 @@ class StateMachineEventTests: _TestCase
         XCTAssertEqual(invokeCount, 2)
     }
 
-    func testRemoveRoute()
-    {
+    func testRemoveRoute() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
@@ -312,8 +299,7 @@ class StateMachineEventTests: _TestCase
     // MARK: - add/removeHandler
     //--------------------------------------------------
 
-    func testAddHandler()
-    {
+    func testAddHandler() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
@@ -342,8 +328,7 @@ class StateMachineEventTests: _TestCase
         XCTAssertEqual(invokeCount, 2)
     }
 
-    func testRemoveHandler()
-    {
+    func testRemoveHandler() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
@@ -379,8 +364,7 @@ class StateMachineEventTests: _TestCase
     // MARK: - addAnyHandler
     //--------------------------------------------------
 
-    func testAddAnyHandler()
-    {
+    func testAddAnyHandler() {
         var invokeCounts = [0, 0, 0, 0, 0, 0]
 
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in

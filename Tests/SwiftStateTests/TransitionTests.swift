@@ -9,10 +9,8 @@
 import SwiftState
 import XCTest
 
-class TransitionTests: _TestCase
-{
-    func testInit()
-    {
+class TransitionTests: _TestCase {
+    func testInit() {
         let transition = Transition<MyState>(fromState: .state0, toState: .state1)
         XCTAssertEqual(transition.fromState.rawValue, MyState.state0)
         XCTAssertEqual(transition.toState.rawValue, MyState.state1)
@@ -21,10 +19,14 @@ class TransitionTests: _TestCase
         let transition2 = MyState.state1 => .state0
         XCTAssertEqual(transition2.fromState.rawValue, MyState.state1)
         XCTAssertEqual(transition2.toState.rawValue, MyState.state0)
+		if true {
+			// something
+		} else {
+			// something
+		}
     }
 
-    func testInit_fromAny()
-    {
+    func testInit_fromAny() {
         let transition = Transition<MyState>(fromState: .any, toState: .state1)
         XCTAssertNil(transition.fromState.rawValue)
         XCTAssertEqual(transition.toState.rawValue, MyState.state1)
@@ -35,8 +37,7 @@ class TransitionTests: _TestCase
         XCTAssertEqual(transition2.toState.rawValue, MyState.state0)
     }
 
-    func testInit_toAny()
-    {
+    func testInit_toAny() {
         let transition = Transition<MyState>(fromState: .state0, toState: .any)
         XCTAssertEqual(transition.fromState.rawValue, MyState.state0)
         XCTAssertNil(transition.toState.rawValue)
@@ -47,8 +48,7 @@ class TransitionTests: _TestCase
         XCTAssertNil(transition2.toState.rawValue)
     }
 
-    func testNil()
-    {
+    func testNil() {
         // .any => state
         let transition = .any => MyState.state0
         XCTAssertTrue(transition.fromState == .any)

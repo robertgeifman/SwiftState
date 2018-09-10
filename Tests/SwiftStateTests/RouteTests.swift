@@ -9,10 +9,8 @@
 import SwiftState
 import XCTest
 
-class RouteTests: _TestCase
-{
-    func testInit()
-    {
+class RouteTests: _TestCase {
+    func testInit() {
         let route = Route<MyState, NoEvent>(transition: .state0 => .state1, condition: nil)
         XCTAssertEqual(route.transition.fromState.rawValue, MyState.state0)
         XCTAssertEqual(route.transition.toState.rawValue, MyState.state1)

@@ -9,16 +9,13 @@
 import SwiftState
 import XCTest
 
-class _TestCase: XCTestCase
-{
-    override func setUp()
-    {
+class _TestCase: XCTestCase {
+    override func setUp() {
         super.setUp()
         print("\n\n\n")
     }
 
-    override func tearDown()
-    {
+    override func tearDown() {
         print("\n\n\n")
         super.tearDown()
     }

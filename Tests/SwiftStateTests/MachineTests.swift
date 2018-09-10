@@ -9,10 +9,8 @@
 import SwiftState
 import XCTest
 
-class MachineTests: _TestCase
-{
-    func testConfigure()
-    {
+class MachineTests: _TestCase {
+    func testConfigure() {
         let machine = Machine<MyState, MyEvent>(state: .state0)
 
         machine.configure {
@@ -26,8 +24,7 @@ class MachineTests: _TestCase
     // MARK: - tryEvent a.k.a `<-!`
     //--------------------------------------------------
 
-    func testCanTryEvent()
-    {
+    func testCanTryEvent() {
         let machine = Machine<MyState, MyEvent>(state: .state0)
 
         // add 0 => 1 & 1 => 2
@@ -40,8 +37,7 @@ class MachineTests: _TestCase
         XCTAssertTrue(machine.canTryEvent(.event0) != nil)
     }
 
-    func testTryEvent()
-    {
+    func testTryEvent() {
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
             // add 0 => 1 => 2
             machine.addRoutes(event: .event0, transitions: [
@@ -66,8 +62,7 @@ class MachineTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state2, "Event0 doesn't have 2 => Any")
     }
 
-    func testTryEvent_userInfo()
-    {
+    func testTryEvent_userInfo() {
         var userInfo: Any? = nil
 
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
@@ -95,8 +90,7 @@ class MachineTests: _TestCase
         XCTAssertTrue(userInfo as? String == "done")
     }
 
-    func testTryEvent_twice()
-    {
+    func testTryEvent_twice() {
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
             // add 0 => 1
             machine.addRoutes(event: .event0, transitions: [
@@ -113,8 +107,7 @@ class MachineTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state2)
     }
 
-    func testTryEvent_string()
-    {
+    func testTryEvent_string() {
         let machine = Machine<MyState, String>(state: .state0)
 
         // add 0 => 1 => 2
@@ -137,8 +130,7 @@ class MachineTests: _TestCase
     }
 
     // https://github.com/ReactKit/SwiftState/issues/20
-    func testTryEvent_issue20()
-    {
+    func testTryEvent_issue20() {
         let machine = Machine<MyState, MyEvent>(state: MyState.state2) { machine in
             machine.addRoutes(event: .event0, transitions: [.any => .state0])
         }
@@ -152,8 +144,7 @@ class MachineTests: _TestCase
 
     // Fix for transitioning of routes w/ multiple from-states
     // https://github.com/ReactKit/SwiftState/pull/32
-    func testTryEvent_issue32()
-    {
+    func testTryEvent_issue32() {
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
             machine.addRoutes(event: .event0, transitions: [ .state0 => .state1 ])
             machine.addRoutes(event: .event1, routes: [ [ .state1, .state2 ] => .state3 ])
@@ -174,8 +165,7 @@ class MachineTests: _TestCase
     // MARK: - add/removeRoute
     //--------------------------------------------------
 
-    func testAddRoute_multiple()
-    {
+    func testAddRoute_multiple() {
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
 
             // add 0 => 1 => 2
@@ -219,8 +209,7 @@ class MachineTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state0)
     }
 
-    func testAddRoute_handler()
-    {
+    func testAddRoute_handler() {
         var invokeCount = 0
 
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
@@ -245,8 +234,7 @@ class MachineTests: _TestCase
         XCTAssertEqual(invokeCount, 2)
     }
 
-    func testRemoveRoute()
-    {
+    func testRemoveRoute() {
         var invokeCount = 0
 
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
@@ -274,8 +262,7 @@ class MachineTests: _TestCase
         XCTAssertEqual(invokeCount, 0, "Handler should NOT be performed")
     }
 
-    func testRemoveRoute_handler()
-    {
+    func testRemoveRoute_handler() {
         var invokeCount = 0
 
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
@@ -305,8 +292,7 @@ class MachineTests: _TestCase
     // MARK: - add/removeHandler
     //--------------------------------------------------
 
-    func testAddHandler()
-    {
+    func testAddHandler() {
         var invokeCount = 0
 
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
@@ -335,8 +321,7 @@ class MachineTests: _TestCase
         XCTAssertEqual(invokeCount, 2)
     }
 
-    func testAddErrorHandler()
-    {
+    func testAddErrorHandler() {
         var invokeCount = 0
 
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
@@ -355,8 +340,7 @@ class MachineTests: _TestCase
 
     }
 
-    func testRemoveHandler()
-    {
+    func testRemoveHandler() {
         var invokeCount = 0
 
         let machine = Machine<MyState, MyEvent>(state: .state0) { machine in
@@ -392,8 +376,7 @@ class MachineTests: _TestCase
     // MARK: - RouteMapping
     //--------------------------------------------------
 
-    func testAddRouteMapping()
-    {
+    func testAddRouteMapping() {
         var invokeCount = 0
 
         let machine = Machine<StrState, StrEvent>(state: .str("initial")) { machine in
@@ -456,8 +439,7 @@ class MachineTests: _TestCase
 
     }
 
-    func testAddRouteMapping_handler()
-    {
+    func testAddRouteMapping_handler() {
         var invokeCount1 = 0
         var invokeCount2 = 0
         var disposables = [Disposable]()

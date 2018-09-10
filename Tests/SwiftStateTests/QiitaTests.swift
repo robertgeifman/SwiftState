@@ -13,16 +13,13 @@ import XCTest
 // Swiftで有限オートマトン（ステートマシン）を作る - Qiita
 // http://qiita.com/inamiy/items/cd218144c90926f9a134
 
-enum InputKey: StateType
-{
+enum InputKey: StateType {
     case none
     case key0, key1, key2, key3, key4, key5, key6, key7, key8, key9
 }
 
-class QiitaTests: _TestCase
-{
-    func testQiita()
-    {
+class QiitaTests: _TestCase {
+    func testQiita() {
         var success = false
 
         let machine = StateMachine<InputKey, NoEvent>(state: .none) { machine in

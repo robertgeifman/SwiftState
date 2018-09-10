@@ -10,10 +10,8 @@ import SwiftState
 import XCTest
 
 /// Unarranged tests.
-class MiscTests: _TestCase
-{
-    func testREADME_string()
-    {
+class MiscTests: _TestCase {
+    func testREADME_string() {
         let machine = StateMachine<String, NoEvent>(state: ".State0") { machine in
 
             machine.addRoute(".State0" => ".State1")
@@ -49,8 +47,7 @@ class MiscTests: _TestCase
     }
 
     // StateType + associated value
-    func testREADME_associatedValue()
-    {
+    func testREADME_associatedValue() {
         let machine = StateMachine<StrState, StrEvent>(state: .str("0")) { machine in
 
             machine.addRoute(.str("0") => .str("1"))
@@ -85,8 +82,7 @@ class MiscTests: _TestCase
         print("machine.state = \(machine.state)")
     }
 
-    func testExample()
-    {
+    func testExample() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) {
 
             // add 0 => 1

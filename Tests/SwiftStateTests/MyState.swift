@@ -8,25 +8,21 @@
 
 import SwiftState
 
-enum MyState: StateType
-{
+enum MyState: StateType {
     case state0, state1, state2, state3
 }
 
-enum StrState: StateType
-{
+enum StrState: StateType {
     case str(String)
 
-    var hashValue: Int
-    {
+    var hashValue: Int {
         switch self {
             case .str(let str):  return str.hashValue
         }
     }
 }
 
-func == (lhs: StrState, rhs: StrState) -> Bool
-{
+func == (lhs: StrState, rhs: StrState) -> Bool {
     switch (lhs, rhs) {
         case let (.str(str1), .str(str2)):
             return str1 == str2

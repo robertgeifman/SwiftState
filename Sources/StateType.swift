@@ -11,46 +11,42 @@ public protocol StateType: Hashable {}
 // MARK: State
 
 /// `StateType` wrapper for handling `.any` state.
-public enum State<S: StateType>
-{
+public enum State<S: StateType> {
     case some(S)
     case any
 }
 
-extension State: Hashable
-{
-    public var hashValue: Int
-    {
+extension State: Hashable {
+    public var hashValue: Int {
         switch self {
-            case .some(let x):  return x.hashValue
-            case .any:          return _hashValueForAny
+		case .some(let x):
+			return x.hashValue
+		case .any:
+			return _hashValueForAny
         }
     }
 }
 
-extension State: RawRepresentable
-{
-    public init(rawValue: S?)
-    {
+extension State: RawRepresentable {
+    public init(rawValue: S?) {
         if let rawValue = rawValue {
             self = .some(rawValue)
-        }
-        else {
+        } else {
             self = .any
         }
     }
 
-    public var rawValue: S?
-    {
+    public var rawValue: S? {
         switch self {
-            case .some(let x):  return x
-            default:            return nil
+		case .some(let x):
+			return x
+		default:
+			return nil
         }
     }
 }
 
-public func == <S>(lhs: State<S>, rhs: State<S>) -> Bool
-{
+public func == <S>(lhs: State<S>, rhs: State<S>) -> Bool {
     switch (lhs, rhs) {
     case let (.some(x1), .some(x2)) where x1 == x2:
         return true
@@ -61,8 +57,7 @@ public func == <S>(lhs: State<S>, rhs: State<S>) -> Bool
     }
 }
 
-public func == <S>(lhs: State<S>, rhs: S) -> Bool
-{
+public func == <S>(lhs: State<S>, rhs: S) -> Bool {
     switch lhs {
     case .some(let x):
         return x == rhs
@@ -71,8 +66,7 @@ public func == <S>(lhs: State<S>, rhs: S) -> Bool
     }
 }
 
-public func == <S>(lhs: S, rhs: State<S>) -> Bool
-{
+public func == <S>(lhs: S, rhs: State<S>) -> Bool {
     switch rhs {
     case .some(let x):
         return x == lhs

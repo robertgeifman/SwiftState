@@ -9,10 +9,8 @@
 import SwiftState
 import XCTest
 
-class BasicTests: _TestCase
-{
-    func testREADME()
-    {
+class BasicTests: _TestCase {
+    func testREADME() {
         // setup state machine
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
 
@@ -49,8 +47,7 @@ class BasicTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state1)
     }
 
-    func testREADME_tryEvent()
-    {
+    func testREADME_tryEvent() {
         let machine = StateMachine<MyState, MyEvent>(state: .state0) { machine in
 
             // add 0 => 1 => 2
@@ -81,8 +78,7 @@ class BasicTests: _TestCase
         XCTAssertEqual(machine.state, MyState.state2, "Event0 doesn't have 2 => Any")
     }
 
-    func testREADME_routeMapping()
-    {
+    func testREADME_routeMapping() {
         let machine = Machine<StrState, StrEvent>(state: .str("initial")) { machine in
 
             machine.addRouteMapping { event, fromState, userInfo -> StrState? in

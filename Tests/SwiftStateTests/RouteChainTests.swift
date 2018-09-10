@@ -9,10 +9,8 @@
 import SwiftState
 import XCTest
 
-class MachineChainTests: _TestCase
-{
-    func testAddRouteChain()
-    {
+class MachineChainTests: _TestCase {
+    func testAddRouteChain() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -44,8 +42,7 @@ class MachineChainTests: _TestCase
         XCTAssertEqual(invokeCount, 2, "Handler should be performed again.")
     }
 
-    func testAddRouteChain_condition()
-    {
+    func testAddRouteChain_condition() {
         var flag = false
         var invokeCount = 0
 
@@ -80,8 +77,7 @@ class MachineChainTests: _TestCase
         XCTAssertEqual(invokeCount, 1, "Handler should be performed.")
     }
 
-    func testAddRouteChain_failBySkipping()
-    {
+    func testAddRouteChain_failBySkipping() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
 
             // add 0 => 1 => 2
@@ -95,8 +91,7 @@ class MachineChainTests: _TestCase
         machine <- .state2
     }
 
-    func testAddRouteChain_failByHangingAround()
-    {
+    func testAddRouteChain_failByHangingAround() {
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
 
             // add 0 => 1 => 2
@@ -113,8 +108,7 @@ class MachineChainTests: _TestCase
         machine <- .state2
     }
 
-    func testAddRouteChain_succeedByFailingHangingAround()
-    {
+    func testAddRouteChain_succeedByFailingHangingAround() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -136,8 +130,7 @@ class MachineChainTests: _TestCase
         XCTAssertEqual(invokeCount, 1, "Handler should be performed because 1 => 3 is not registered, thus performing 0 => 1 => 2.")
     }
 
-    func testAddRouteChain_goBackHomeAWhile()
-    {
+    func testAddRouteChain_goBackHomeAWhile() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -160,8 +153,7 @@ class MachineChainTests: _TestCase
     }
 
     // https://github.com/inamiy/SwiftState/issues/2
-    func testAddRouteChain_goBackHomeAWhile2()
-    {
+    func testAddRouteChain_goBackHomeAWhile2() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -199,8 +191,7 @@ class MachineChainTests: _TestCase
         XCTAssertEqual(invokeCount, 1)
     }
 
-    func testRemoveRouteChain()
-    {
+    func testRemoveRouteChain() {
         var invokeCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -225,8 +216,7 @@ class MachineChainTests: _TestCase
         XCTAssertEqual(invokeCount, 0, "ChainHandler should NOT be performed.")
     }
 
-    func testAddChainErrorHandler()
-    {
+    func testAddChainErrorHandler() {
         var errorCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
@@ -260,8 +250,7 @@ class MachineChainTests: _TestCase
         XCTAssertEqual(errorCount, 2, "chainErrorHandler should be performed again.")
     }
 
-    func testRemoveChainErrorHandler()
-    {
+    func testRemoveChainErrorHandler() {
         var errorCount = 0
 
         let machine = StateMachine<MyState, NoEvent>(state: .state0) { machine in
